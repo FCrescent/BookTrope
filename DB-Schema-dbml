@@ -1,0 +1,43 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table books {
+  id integer [primary key]
+  ISBN varchar(20) [unique, not null]
+  title varchar
+  subtitle  varchar
+  author_id int
+  publisher_id int
+  publication_year year
+  language varchar(50)
+  synopsis text
+  page_count int
+  format enum("ebook", "paperback", "hardcover", "audiobook")
+  cover_url varchar(255)
+  average_rating  decimal(3,2)
+  rating_count    int  
+  review_count    int
+  added_by_user_id int [ref: > users.id]  
+  created_at timestamp  
+  updated_at timestamp 
+
+}
+
+
+Table authors {
+  id int [primary key]
+  name varchar(255)
+}
+
+Table publishers {
+  id int [primary key]
+  name varchar(255)
+}
+
+Table users {
+  id int [primary key]
+  name varchar(255)
+}
+
+Ref: books.author_id > authors.id // many-to-one
+Ref: books.publisher_id > publishers.id // many-to-one
